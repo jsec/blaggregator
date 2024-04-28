@@ -5,6 +5,9 @@
 *.so
 *.dylib
 
+# Todo, move this to a build dir
+blog-aggregator
+
 # Test binary, built with `go test -c`
 *.test
 
