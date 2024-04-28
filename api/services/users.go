@@ -1,23 +1,21 @@
 package services
 
 import (
-	"context"
 	"net/http"
-	"time"
 
-	"github.com/google/uuid"
 	"github.com/jsec/blog-aggregator/internal/database"
-	dto "github.com/jsec/blog-aggregator/internal/types"
+	"github.com/jsec/blog-aggregator/internal/types/dto"
+	"github.com/jsec/blog-aggregator/internal/users"
 	"github.com/labstack/echo/v4"
 )
 
 type UserService struct {
-	db *database.Queries
+	repo users.UserRepository
 }
 
 func NewUserService(db *database.Queries) UserService {
 	return UserService{
-		db: db,
+		repo: users.NewUserRepository(db),
 	}
 }
 
@@ -32,13 +30,7 @@ func (s *UserService) createUser(c echo.Context) error {
 		return c.String(http.StatusBadRequest, "Bad Request")
 	}
 
-	ctx := context.Background()
-	user, err := s.db.CreateUser(ctx, database.CreateUserParams{
-		ID:        uuid.New(),
-		Name:      req.Name,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-	})
+	user, err := s.repo.CreateUser(req)
 
 	if err != nil {
 		return err

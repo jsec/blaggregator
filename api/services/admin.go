@@ -3,7 +3,7 @@ package services
 import (
 	"net/http"
 
-	dto "github.com/jsec/blog-aggregator/internal/types"
+	"github.com/jsec/blog-aggregator/internal/types/dto"
 	"github.com/labstack/echo/v4"
 )
 
