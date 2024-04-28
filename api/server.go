@@ -35,7 +35,7 @@ func (s *Server) RegisterServices() {
 }
 
 func (s *Server) Start() {
-	port := os.Getenv("")
+	port := os.Getenv("PORT")
 	api := s.api
 	api.Logger.Fatal(api.Start(port))
 }

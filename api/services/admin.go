@@ -9,8 +9,8 @@ import (
 
 type AdminService struct{}
 
-func NewAdminService() *AdminService {
-	return &AdminService{}
+func NewAdminService() AdminService {
+	return AdminService{}
 }
 
 func (a *AdminService) RegisterRoutes(g *echo.Group) {

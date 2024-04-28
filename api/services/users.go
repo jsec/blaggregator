@@ -15,8 +15,8 @@ type UserService struct {
 	db *database.Queries
 }
 
-func NewUserService(db *database.Queries) *UserService {
-	return &UserService{
+func NewUserService(db *database.Queries) UserService {
+	return UserService{
 		db: db,
 	}
 }
