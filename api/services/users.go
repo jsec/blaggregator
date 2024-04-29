@@ -3,6 +3,7 @@ package services
 import (
 	"net/http"
 
+	"github.com/jsec/blog-aggregator/internal/auth"
 	"github.com/jsec/blog-aggregator/internal/database"
 	"github.com/jsec/blog-aggregator/internal/types/dto"
 	"github.com/jsec/blog-aggregator/internal/users"
@@ -20,6 +21,7 @@ func NewUserService(db *database.Queries) UserService {
 }
 
 func (s *UserService) RegisterRoutes(g *echo.Group) {
+	g.GET("/", s.getUser)
 	g.POST("/", s.createUser)
 }
 
@@ -37,4 +39,18 @@ func (s *UserService) createUser(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, user)
+}
+
+func (s *UserService) getUser(c echo.Context) error {
+	apiKey, err := auth.ParseAuthHeader(c)
+	if err != nil {
+		return err
+	}
+
+	user, err := s.repo.GetUserByApiKey(apiKey)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bad Request")
+	}
+
+	return c.JSON(http.StatusOK, user)
 }

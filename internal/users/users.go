@@ -34,3 +34,12 @@ func (r *UserRepository) CreateUser(req dto.CreateUserRequest) (database.User, e
 
 	return user, nil
 }
+
+func (r *UserRepository) GetUserByApiKey(apiKey string) (database.User, error) {
+	user, err := r.db.GetUserByApiKey(context.Background(), apiKey)
+	if err != nil {
+		return database.User{}, err
+	}
+
+	return user, nil
+}

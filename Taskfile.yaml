@@ -23,6 +23,7 @@ tasks:
         silent: true
 
   db:rollback:
+    dir: "{{.TASKFILE_DIR}}/sql/schema"
     cmds:
       - cmd: cd sql/schema
         silent: true
