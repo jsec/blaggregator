@@ -1,4 +1,4 @@
-package services
+package api
 
 import (
 	"net/http"
@@ -20,12 +20,7 @@ func NewUserService(db *database.Queries) UserService {
 	}
 }
 
-func (s *UserService) RegisterRoutes(g *echo.Group) {
-	g.GET("/", s.getUser)
-	g.POST("/", s.createUser)
-}
-
-func (s *UserService) createUser(c echo.Context) error {
+func (s *UserService) CreateUser(c echo.Context) error {
 	var req dto.CreateUserRequest
 
 	if err := c.Bind(&req); err != nil {
@@ -41,7 +36,7 @@ func (s *UserService) createUser(c echo.Context) error {
 	return c.JSON(http.StatusCreated, user)
 }
 
-func (s *UserService) getUser(c echo.Context) error {
+func (s *UserService) GetUser(c echo.Context) error {
 	apiKey, err := auth.ParseAuthHeader(c)
 	if err != nil {
 		return err

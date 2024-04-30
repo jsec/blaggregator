@@ -1,4 +1,4 @@
-package config
+package api
 
 import (
 	"github.com/jsec/blog-aggregator/internal/database"

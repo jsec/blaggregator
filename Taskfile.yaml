@@ -25,9 +25,8 @@ tasks:
   db:rollback:
     dir: "{{.TASKFILE_DIR}}/sql/schema"
     cmds:
-      - cmd: cd sql/schema
-        silent: true
       - cmd: goose down
+        silent: true
 
   db:codegen:
     cmds:

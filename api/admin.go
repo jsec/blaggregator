@@ -1,4 +1,4 @@
-package services
+package api
 
 import (
 	"net/http"
@@ -13,11 +13,7 @@ func NewAdminService() AdminService {
 	return AdminService{}
 }
 
-func (a *AdminService) RegisterRoutes(g *echo.Group) {
-	g.GET("/health", a.healthCheck)
-}
-
-func (a *AdminService) healthCheck(c echo.Context) error {
+func (a *AdminService) HealthCheck(c echo.Context) error {
 	return c.JSON(http.StatusOK, dto.HealthCheckResponse{
 		Status: "ok",
 	})
