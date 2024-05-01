@@ -42,3 +42,12 @@ func (s *FeedService) CreateFeed(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, feed)
 }
+
+func (s *FeedService) GetFeeds(c echo.Context) error {
+	feeds, err := s.repo.GetFeeds()
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, feeds)
+}

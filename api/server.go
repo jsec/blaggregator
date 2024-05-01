@@ -35,6 +35,7 @@ func (s *Server) RegisterServices() {
 
 	feedService := NewFeedService(s.config.DB)
 	v1.POST("/feeds", feedService.CreateFeed, s.AuthMiddleware)
+	v1.GET("/feeds", feedService.GetFeeds)
 }
 
 func (s *Server) Start() {

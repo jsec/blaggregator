@@ -37,3 +37,12 @@ func (r *FeedRepository) CreateFeed(req dto.CreateFeedRequest, userId uuid.UUID)
 
 	return feed, nil
 }
+
+func (r *FeedRepository) GetFeeds() ([]database.Feed, error) {
+	feeds, err := r.db.GetFeeds(context.Background())
+	if err != nil {
+		return []database.Feed{}, err
+	}
+
+	return feeds, nil
+}
