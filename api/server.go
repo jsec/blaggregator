@@ -39,6 +39,7 @@ func (s *Server) RegisterServices() {
 
 	followService := NewFollowService(s.config.DB)
 	v1.POST("/follows", followService.CreateFollow, s.AuthMiddleware)
+	v1.DELETE("/follows/:id", followService.DeleteFollow, s.AuthMiddleware)
 }
 
 func (s *Server) Start() {
