@@ -2,7 +2,6 @@ package feeds
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -31,7 +30,6 @@ func (r *FeedRepository) CreateFeed(req dto.CreateFeedRequest, userId uuid.UUID)
 	})
 
 	if err != nil {
-		fmt.Println(err.Error())
 		return database.Feed{}, err
 	}
 

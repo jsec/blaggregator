@@ -2,7 +2,6 @@ package api
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -12,18 +11,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type FeedService struct {
-	repo feeds.FeedRepository
+type FollowService struct {
+	repo feeds.FollowRepository
 }
 
-func NewFeedService(db *database.Queries) FeedService {
-	return FeedService{
-		repo: feeds.NewFeedRepository(db),
+func NewFollowService(db *database.Queries) FollowService {
+	return FollowService{
+		repo: feeds.NewFollowRepository(db),
 	}
 }
 
-func (s *FeedService) CreateFeed(c echo.Context) error {
-	var req dto.CreateFeedRequest
+func (s *FollowService) CreateFollow(c echo.Context) error {
+	var req dto.CreateFollowRequest
 
 	if err := c.Bind(&req); err != nil {
 		return c.String(http.StatusBadRequest, "Bad Request")
@@ -35,21 +34,15 @@ func (s *FeedService) CreateFeed(c echo.Context) error {
 		return errors.New("Unable to get UserID from context")
 	}
 
-	feed, err := s.repo.CreateFeed(req, userID)
-
+	feedId, err := uuid.Parse(req.FeedID)
 	if err != nil {
-		fmt.Println(err.Error())
-		return err
+		return c.String(http.StatusBadRequest, "Bad Request")
 	}
 
-	return c.JSON(http.StatusCreated, feed)
-}
-
-func (s *FeedService) GetFeeds(c echo.Context) error {
-	feeds, err := s.repo.GetFeeds()
+	follow, err := s.repo.CreateFollow(feedId, userID)
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, feeds)
+	return c.JSON(http.StatusCreated, follow)
 }
