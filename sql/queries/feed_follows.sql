@@ -7,3 +7,7 @@ returning *;
 delete from feed_follows
 where id = $1
 and user_id = $2;
+
+-- name: GetFollowsByUserID :many
+select * from feed_follows
+where user_id = $1;

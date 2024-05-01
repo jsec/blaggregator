@@ -34,3 +34,7 @@ func (r *FollowRepository) DeleteFollow(followId, userId uuid.UUID) error {
 		UserID: userId,
 	})
 }
+
+func (r *FollowRepository) GetFollowsByUserID(userId uuid.UUID) ([]database.FeedFollow, error) {
+	return r.db.GetFollowsByUserID(context.Background(), userId)
+}

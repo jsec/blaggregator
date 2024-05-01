@@ -65,3 +65,18 @@ func (s *FollowService) DeleteFollow(c echo.Context) error {
 
 	return c.String(http.StatusNoContent, "OK")
 }
+
+func (s *FollowService) GetFollowsByUserID(c echo.Context) error {
+	userIdContext := c.Get("UserID")
+	userId, ok := userIdContext.(uuid.UUID)
+	if !ok {
+		return errors.New("Unable to get UserID from context")
+	}
+
+	follows, err := s.repo.GetFollowsByUserID(userId)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, follows)
+}

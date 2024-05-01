@@ -38,6 +38,7 @@ func (s *Server) RegisterServices() {
 	v1.GET("/feeds", feedService.GetFeeds)
 
 	followService := NewFollowService(s.config.DB)
+	v1.GET("/follows", followService.GetFollowsByUserID, s.AuthMiddleware)
 	v1.POST("/follows", followService.CreateFollow, s.AuthMiddleware)
 	v1.DELETE("/follows/:id", followService.DeleteFollow, s.AuthMiddleware)
 }
